@@ -66,6 +66,7 @@ gem 'enumerize'
 group :production do
   gem 'rails_12factor' #Heroku tools
   gem 'pg' # Postgres on Heroku
+  gem 'unicorn'
 end
 
 group :development, :test do
