@@ -3,11 +3,12 @@ class Report < ActiveRecord::Base
 
   scope :latest, order('created_at DESC').limit(1)
 
-  validates :question1, length: { minimum: 5 }, presence: true
-  validates :question2, length: { minimum: 5 }, presence: true
-  validates :question3, length: { minimum: 5 }, presence: true
-  validates :question4, length: { minimum: 5 }, presence: true
+  validates :question1, presence: true
+  validates :question2, presence: true
+  validates :question3, presence: true
+  validates :question4, presence: true
 
+  before_save :serialize_multi_inputs
   after_save :check_for_summary_email
 
   def self.send_summary_email
@@ -21,10 +22,22 @@ class Report < ActiveRecord::Base
   end
 
   private
+    def serialize_multi_inputs
+      4.times do |i|
+        n = i+1
+        send "question#{n}=", jsonify(send("question#{n}"))
+      end
+    end
+
     def check_for_summary_email
       users_without_report = User.includes(:reports).all.select { |user| user.reports.empty? }
       if users_without_report.count <= 0
         Report.send_summary_email
       end
+    end
+
+    def jsonify array
+      sanitized_array = array.select { |element| !element.empty? }
+      sanitized_array.to_json
     end
 end

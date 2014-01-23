@@ -10,6 +10,6 @@ class ReportsController < InheritedResources::Base
     end
 
     def permitted_params
-      params.permit report: [ :question1, :question2, :question3, :question4 ]
+      params.permit report: { question1: [], question2: [], question3: [], question4: [] }
     end
 end
