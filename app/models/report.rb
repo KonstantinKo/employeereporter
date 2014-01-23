@@ -35,11 +35,6 @@ class Report < ActiveRecord::Base
     end
   end
 
-  def debug
-    debugger
-    true
-  end
-
   private
     def serialize_multi_inputs
       4.times do |i|
