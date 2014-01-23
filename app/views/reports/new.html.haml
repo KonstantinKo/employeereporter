@@ -9,7 +9,7 @@
 
   In general I feel ...
   %br
-  = f.collection_radio_buttons :mood, [[1, "<i class='fa fa-smile-o'></i>".html_safe], [2, "<i class='fa fa-meh-o'></i>".html_safe], [3, "<i class='fa fa-frown-o'></i>".html_safe]], :first, :last
+  = f.collection_radio_buttons :mood, [[1, fa_icon('smile-o')], [2, fa_icon('meh-o')], [3, fa_icon('frown-o')]], :first, :last
   = f.full_error :mood, class: 'error'
   %br
 
