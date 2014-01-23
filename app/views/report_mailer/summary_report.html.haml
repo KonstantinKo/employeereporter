@@ -6,7 +6,11 @@
     %h1 Report Summary
 
     %p
-      All employees have turned in their reports:
+      All employees have turned in their reports!
+
+    %p
+      The average mood of everyone is:
+      = mood_to_smiley(average_mood_from(@reports))
 
     %ul
       - @reports.each do |report|
@@ -22,6 +26,10 @@
                   - answers.each do |answer|
                     %li
                       = answer
+            %li
+              Mood:
+              - debugger
+              = mood_to_smiley report.mood
 
     %p
       That's it. Have a great day!
