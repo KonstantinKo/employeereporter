@@ -1,0 +1,11 @@
+%h1
+  = t 'report.new_heading'
+
+
+= simple_form_for resource, url: { action: :create }, html: {class: 'form-vertical' } do |f|
+  = f.input :question1
+  = f.input :question2
+  = f.input :question3
+  = f.input :question4
+
+  = f.button :submit

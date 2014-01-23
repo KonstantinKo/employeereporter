@@ -15,6 +15,11 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
+# Bootstrap
+gem "therubyracer"
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails"
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -41,5 +46,32 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
+
+# Devise for authentication
+gem 'devise'
+
+# Haml for templating
+gem 'haml'
+
+# InheritedResources for streamlined controllers
+gem 'inherited_resources'
+
+# form helper
+gem 'simple_form'
+
+
+group :development, :test do
+  # Use debugger
+  gem 'debugger'
+
+  # Data faker
+  gem 'factory_girl_rails'
+  gem 'faker'
+end
+
+
+group :development do
+  # Easier debugging
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end

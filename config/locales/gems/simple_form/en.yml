@@ -1,0 +1,8 @@
+en:
+  simple_form:
+    labels:
+      report:
+        question1: "What's going well? Any wins (big or small) this week?"
+        question2: "What challenges are you facing? Where are you stuck?"
+        question3: "How are you feeling? What's the morale you see around you?"
+        question4: "One suggestion to improve your role, team or organization?"

@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+user = User.find_by_email("user@user.com")
+unless user
+  user = FactoryGirl.create(:user, email: "user@user.com", password: "password", password_confirmation: "password")
+end
