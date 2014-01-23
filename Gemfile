@@ -3,9 +3,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
@@ -19,6 +16,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem "twitter-bootstrap-rails"
+gem 'font-awesome-less'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -59,8 +57,21 @@ gem 'inherited_resources'
 # form helper
 gem 'simple_form'
 
+# Working with time
+gem 'chronic'
+
+# Enumerization
+gem 'enumerize'
+
+group :production do
+  gem 'rails_12factor' #Heroku tools
+  gem 'pg' # Postgres on Heroku
+end
 
 group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+
   # Use debugger
   gem 'debugger'
 
