@@ -2,15 +2,24 @@
   = t 'report.new_heading'
 
 = simple_form_for resource, url: { action: :create }, html: {class: 'form-vertical' } do |f|
-  = f.input :question1, input_html: { class: 'multi_answer', name: 'report[question1][]' }
-  = f.input :question2, input_html: { class: 'multi_answer', name: 'report[question2][]' }
-  = f.input :question3, input_html: { class: 'multi_answer', name: 'report[question3][]' }
-  = f.input :question4, input_html: { class: 'multi_answer', name: 'report[question4][]' }
+  - 4.times do |i|
+    - n = i+1
+    - answers = resource.send("question#{n}")
+    - if answers.is_a? Array
+      - answers.each_with_index do |answer, j|
+        - if j == 0
+          = f.input :"question#{n}", input_html: { class: 'multi_answer', name: "report[question#{n}][]", value: answer }
+        - else
+          = f.text_field :"question#{n}", { class: 'multi_answer', name: "report[question#{n}][]", id: nil, value: answer }
+          %br
 
-  In general I feel ...
-  %br
-  = f.collection_radio_buttons :mood, [[1, fa_icon('smile-o')], [2, fa_icon('meh-o')], [3, fa_icon('frown-o')]], :first, :last
-  = f.full_error :mood, class: 'error'
-  %br
+    - else
+      = f.input :"question#{n}", input_html: { class: 'multi_answer', name: "report[question#{n}][]" }
+
+  %div.control-group{class: (resource.errors[:mood].empty? ? nil : 'error')}
+    In general I feel ...
+    %br
+    = f.collection_radio_buttons :mood, [[1, fa_icon('smile-o')], [2, fa_icon('meh-o')], [3, fa_icon('frown-o')]], :first, :last
+    = f.full_error :mood
 
   = f.button :submit

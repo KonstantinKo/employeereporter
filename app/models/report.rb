@@ -10,13 +10,14 @@ class Report < ActiveRecord::Base
   validates :question2, presence: true
   validates :question3, presence: true
   validates :question4, presence: true
-  #validates :mood, presence: true
+  validates :mood, inclusion: { in: %w(1 2 3) }
 
   enumerize :mood, in: [1,2,3]
 
+  before_validation :sanitize_multi_inputs
   before_save :serialize_multi_inputs
   after_save :check_for_summary_email
-  after_save :sanitize_multi_inputs
+  after_save :deserialize_multi_inputs
 
   def self.send_summary_email
     reports = []
@@ -34,18 +35,31 @@ class Report < ActiveRecord::Base
     end
   end
 
+  def debug
+    debugger
+    true
+  end
+
   private
     def serialize_multi_inputs
       4.times do |i|
         n = i+1
-        send "question#{n}=", jsonify(send("question#{n}"))
+        send "question#{n}=", send("question#{n}").to_json
       end
     end
-
-    def sanitize_multi_inputs
+    def deserialize_multi_inputs
       4.times do |i|
         n = i+1
         send "question#{n}=", ActiveSupport::JSON.decode(send("question#{n}"))
+      end
+    end
+
+    # remove empty elements
+    def sanitize_multi_inputs
+      4.times do |i|
+        n = i+1
+        sanitized_array = send("question#{n}").select { |element| !element.empty? }
+        send "question#{n}=", (sanitized_array.empty? ? nil : sanitized_array)
       end
     end
 
@@ -54,7 +68,7 @@ class Report < ActiveRecord::Base
     end
 
     def jsonify array
-      sanitized_array = array.select { |element| !element.empty? }
+      sanitized_array =
       sanitized_array.to_json
     end
 end
