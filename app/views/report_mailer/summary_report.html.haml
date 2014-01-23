@@ -1,0 +1,24 @@
+!!!
+%html
+  %head>
+    %meta{ content: 'text/html', charset: 'UTF-8', "http-equiv" => 'Content-Type' }
+  %body
+    %h1 Report Summary
+
+    %p
+      All employees have turned in a report:
+
+    %ul
+      - @reports.each do |report|
+        %li
+          = report.user.email
+          %ul
+            - 4.times do |i|
+              - n = i+1
+              %li
+                =t "simple_form.labels.report.question#{n}"
+                %br
+                = report.send("question#{n}")
+
+    %p
+      That's it. Have a great day!
